@@ -1,0 +1,27 @@
+{
+  "name": "mission",
+  "version": "0.0.1",
+  "description": "Apply CRUD permissions on your express APIs based on user groups",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/goodybag/mission.git"
+  },
+  "keywords": [
+    "permissions",
+    "express"
+  ],
+  "peerDependencies": {
+    "express": "3.x.x"
+  },
+  "author": "John Fawcett",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "d24ec7dcc6c623bf86298c28dfa21d6d1054a86a"
+}
