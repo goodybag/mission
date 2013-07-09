@@ -116,6 +116,7 @@ The permissions document is the second parameter to the ```register``` function.
 * ```fields``` - This property specifies all fields allowed on the given resource for any group
 * ```*``` - Select all fields defined in ```fields```
 * ```!{field_name}``` - Exclude a field from the array
-* ```{field_name}:{resource_name}.{sub_field_name}``` - Field permissions references another permissions document
-  - Note the {sub_field_name} is optional. If you only put ```{field_name}:{resource_name}``` then it will use all of the sub-resource sub-fields
-  - Example: ```['id', 'screenName', 'books:books.id', 'books:books.name']```
+* ```{field_name}.{sub_field_1_name}[.{sub_field_2_name}]...``` - Used for embedded objects or arrays
+* ```{field_name}:{resource_name}``` - Field permissions references another permissions document
+  - If you put ```{field_name}:{resource_name}``` then it will use all of the sub-resource sub-fields
+  - Example: ```['id', 'screenName', 'books:books']```
