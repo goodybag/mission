@@ -72,6 +72,53 @@ describe('mission.init', function(){
     );
   });
 
+  it('should expand really deep references with expansions', function(){
+    var usersDoc = {
+      world: {
+        read: ['id', 'screenName', 'books:books']
+      , create: false
+      , delete: false
+      , update: false
+      }
+    };
+
+    var booksDoc = {
+      world: {
+        read: ['id', 'name', 'author:authors']
+      , create: false
+      , delete: false
+      , update: false
+      }
+    };
+
+    var authorsDoc = {
+      world: {
+        read: ['id', 'name', 'birthday']
+      , create: false
+      , delete: false
+      , update: false
+      }
+    };
+
+    mission.register('users', usersDoc);
+    mission.register('books', booksDoc);
+    mission.register('authors', authorsDoc);
+
+    mission.init();
+
+    var a = mission.expanded.users.world.read;
+    var b = ['id', 'screenName', 'books'].concat(
+      booksDoc.world.read.map(function(b){ return 'books.' + b; }).concat(
+        authorsDoc.world.read.map(function(a){ return 'books.author.' + a; })
+      ).map(function(f){ if (f == 'books.author:authors') return 'books.author'; return f; })
+    );
+
+    assert.equal(
+      JSON.stringify(a, true, '  ')
+    , JSON.stringify(b, true, '  ')
+    );
+  });
+
   it('should expand references with expansions', function(){
     var usersDoc = {
       world: {
