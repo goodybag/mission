@@ -106,4 +106,74 @@ describe('mission.init', function(){
     , JSON.stringify(b, true, '  ')
     );
   });
+
+  it('should include all fields', function(){
+    var usersDoc = {
+      fields: ['id', 'screenName', 'firstName', 'lastName']
+    , world: {
+        read: '*'
+      , create: false
+      , delete: false
+      , update: false
+      }
+    };
+
+    mission.register('users', usersDoc);
+    mission.init();
+
+    assert.equal(
+      JSON.stringify(mission.expanded.users.world.read, true, '  ')
+    , JSON.stringify(usersDoc.fields, true, '  ')
+    );
+  });
+
+  it('should include all fields except lastName', function(){
+    var usersDoc = {
+      fields: ['id', 'screenName', 'firstName', 'lastName']
+    , world: {
+        read: ['*', '!lastName']
+      , create: false
+      , delete: false
+      , update: false
+      }
+    };
+
+    mission.register('users', usersDoc);
+    mission.init();
+
+    var a = mission.expanded.users.world.read;
+    var b = usersDoc.fields.filter(function(f){
+      return f != 'lastName';
+    });
+
+    assert.equal(
+      JSON.stringify(a, true, '  ')
+    , JSON.stringify(b, true, '  ')
+    );
+  });
+
+  it('should include all fields except firstName and lastName', function(){
+    var usersDoc = {
+      fields: ['id', 'screenName', 'firstName', 'lastName']
+    , world: {
+        read: ['*', '!firstName', '!lastName']
+      , create: false
+      , delete: false
+      , update: false
+      }
+    };
+
+    mission.register('users', usersDoc);
+    mission.init();
+
+    var a = mission.expanded.users.world.read;
+    var b = usersDoc.fields.filter(function(f){
+      return ['firstName', 'lastName'].indexOf(f) == -1;
+    });
+
+    assert.equal(
+      JSON.stringify(a, true, '  ')
+    , JSON.stringify(b, true, '  ')
+    );
+  });
 });
