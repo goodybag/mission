@@ -105,9 +105,14 @@ app.post( '/users'
 );
 ```
 
-### ```mission.init()```
+### ```mission.init(options)```
 
 Expands and evaluates all permissions documents. Call after definining all permissions.
+
+__Options:__
+
+* ```userField``` - Property the user object will be stored on in the request. Default: ```req['user']```
+* ```groupsField``` - Property the groups object will be stored on in the user object. Default: ```req.user['groups']```
 
 ### Permissions Document API
 
